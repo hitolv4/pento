@@ -71,12 +71,22 @@ defmodule PentoWeb.Router do
 
       live "/guess", WrongLive
 
+      # PRODUCT
+
       live "/products", ProductLive.Index, :index
       live "/products/new", ProductLive.Index, :new
       live "/products/:id/edit", ProductLive.Index, :edit
 
       live "/products/:id", ProductLive.Show, :show
       live "/products/:id/show/edit", ProductLive.Show, :edit
+
+      # FAQs
+
+      live "/frequently_asked_question", FrequentlyAskedQuestionLive.Index, :index
+      live "/frequently_asked_question/new", FrequentlyAskedQuestionLive.Index, :new
+      live "/frequently_asked_question/:id/answer", FrequentlyAskedQuestionLive.Index, :answer
+
+      live "/frequently_asked_question/:id", FrequentlyAskedQuestionLive.Show, :show
     end
   end
 

@@ -1,0 +1,60 @@
+<.header>
+  Listing Frequently asked question
+  <:actions>
+    <.link patch={~p"/frequently_asked_question/new"}>
+      <.button>New Question</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="frequently_asked_question"
+  rows={@streams.frequently_asked_question_collection}
+  row_click={
+    fn {_id, frequently_asked_question} ->
+      JS.navigate(~p"/frequently_asked_question/#{frequently_asked_question}")
+    end
+  }
+>
+  <:col :let={{_id, frequently_asked_question}} label="Question">
+    <%= frequently_asked_question.question %>
+  </:col>
+  <:col :let={{_id, frequently_asked_question}} label="Answer">
+    <%= frequently_asked_question.answer %>
+  </:col>
+  <:col :let={{_id, frequently_asked_question}} label="Vote">
+    <%= frequently_asked_question.vote %>
+  </:col>
+  <:action :let={{_id, frequently_asked_question}}>
+    <div class="sr-only">
+      <.link navigate={~p"/frequently_asked_question/#{frequently_asked_question}"}>Show</.link>
+    </div>
+    <.link patch={~p"/frequently_asked_question/#{frequently_asked_question}/answer"}>
+      Answer
+    </.link>
+  </:action>
+  <:action :let={{id, frequently_asked_question}}>
+    <.link
+      phx-click={JS.push("vote", value: %{id: frequently_asked_question.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Vote
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :answer]}
+  id="frequently_asked_question-modal"
+  show
+  on_cancel={JS.patch(~p"/frequently_asked_question")}
+>
+  <.live_component
+    module={PentoWeb.FrequentlyAskedQuestionLive.FormComponent}
+    id={@frequently_asked_question.id || :new}
+    title={@page_title}
+    action={@live_action}
+    frequently_asked_question={@frequently_asked_question}
+    patch={~p"/frequently_asked_question"}
+  />
+</.modal>
