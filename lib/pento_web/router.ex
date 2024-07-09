@@ -1,4 +1,5 @@
 defmodule PentoWeb.Router do
+  alias Pento.Survey
   use PentoWeb, :router
 
   import PentoWeb.UserAuth
@@ -75,6 +76,8 @@ defmodule PentoWeb.Router do
 
       live "/promo", PromoLive
 
+      # SURVEY
+      live "/survey", SurveyLive, :index
       # PRODUCT
 
       live "/products", ProductLive.Index, :index

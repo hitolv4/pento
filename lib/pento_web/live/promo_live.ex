@@ -41,7 +41,7 @@ defmodule PentoWeb.PromoLive do
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("save", %{"recipient" => recipient_params}, socket) do
+  def handle_event("save", %{"recipient" => _recipient_params}, _socket) do
     :timer.sleep(1000)
     # ...
   end
